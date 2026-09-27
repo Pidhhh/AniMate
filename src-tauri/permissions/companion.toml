@@ -1,0 +1,53 @@
+# Permissions for AniMate's own commands.
+#
+# These are not optional, and the reason is subtle enough to be worth writing
+# down. Tauri only enforces the ACL on application commands when one of these
+# holds:
+#
+#     plugin_command.is_some() || has_app_acl_manifest || !is_local
+#
+# The renderer is served from the embedded loopback server, so its origin is
+# `http://127.0.0.1:8933`. Tauri classifies anything that is not its own
+# internal protocol as a *remote* origin, so `!is_local` is true and the ACL
+# applies even to commands defined in this very crate. Without a manifest,
+# every invoke is rejected with "not allowed. Plugin not found".
+#
+# Serving the page from Tauri's own protocol instead would make `is_local`
+# true and skip the ACL — but it would also change `location.origin` away from
+# loopback, which silently disables the ported network layer's proxy gate and
+# breaks realtime voice. Declaring permissions is the cheaper trade.
+
+[[permission]]
+identifier = "allow-shell-window-controls"
+description = "Allows the window chrome: minimize, close, fullscreen, and the always-on-top pin."
+commands.allow = [
+    "shell_minimize",
+    "shell_close",
+    "shell_set_topmost",
+    "shell_is_topmost",
+    "shell_toggle_fullscreen",
+    "shell_set_fullscreen",
+    "shell_is_fullscreen",
+    "shell_window_geometry",
+]
+
+[[permission]]
+identifier = "allow-shell-log"
+description = "Allows appending a line to the on-disk diagnostic log."
+commands.allow = ["shell_append_log"]
+
+[[permission]]
+identifier = "allow-model-library"
+description = "Allows listing, importing, removing and activating user-supplied character models."
+commands.allow = [
+    "models_list",
+    "models_import",
+    "models_import_folder",
+    "models_delete",
+    "models_set_active",
+]
+
+[[permission]]
+identifier = "allow-settings"
+description = "Allows reading and writing user settings, including the LLM endpoint and API key."
+commands.allow = ["settings_get", "settings_set"]

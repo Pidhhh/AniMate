@@ -1,13 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>AniMate</title>
+    <style>
+      /* Painted before any stylesheet loads, so the frameless window never
+         flashes white on boot. Matches the --stage token in globals.css. */
+      html,
+      body {
+        margin: 0;
+        background: #120d14;
+      }
+    </style>
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-    <script type="module" src="/src/renderer.js"></script>
+    <div id="root"></div>
+    <!-- Spine 4.2.43 runtime.
+         Loaded as a classic script, not an ES module: the bundle is
+         `var spine = (() => {...})()` and exposes itself as a global. It must
+         load before the app module, and its version must match the .skel
+         version trailer exactly — a skew renders silently wrong. -->
+    <script src="/vendor/spine-webgl.js"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

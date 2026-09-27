@@ -1,0 +1,58 @@
+[package]
+name = "animate"
+version = "0.1.0"
+description = "AniMate — cross-platform AI companion with a pluggable character runtime"
+authors = ["Pidhhh"]
+license = "MIT"
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "animate_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-single-instance = "2"
+# Native file picker, used by the model importer. Importing through a real
+# dialog rather than an <input type="file"> keeps the files on disk where the
+# loopback server can serve them, instead of in the webview's blob store.
+tauri-plugin-dialog = "2"
+# OS randomness for the loopback session token. Already in the tree via ring,
+# so this costs no extra compile time.
+getrandom = "0.3"
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+tokio = { version = "1", features = ["full"] }
+tokio-util = { version = "0.7", features = ["io"] }
+
+axum = { version = "0.8", features = ["ws", "query"] }
+# Must track the version axum's `ws` feature uses internally, or the
+# CloseFrame/Utf8Bytes types in the message conversions are from two different
+# crates and won't unify. axum 0.8.9 pins tokio-tungstenite 0.29.
+tokio-tungstenite = { version = "0.29", features = ["rustls-tls-webpki-roots"] }
+
+reqwest = { version = "0.12", default-features = false, features = [
+    "stream",
+    "rustls-tls",
+    "gzip",
+    "brotli",
+    "deflate",
+] }
+
+futures-util = "0.3"
+mime_guess = "2"
+percent-encoding = "2"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true

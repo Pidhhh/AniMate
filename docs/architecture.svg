@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" width="960" height="700" role="img" aria-label="AniMate architecture: a Tauri Rust shell hosting a loopback HTTP server, a webview that loads from that server, two character backends behind one contract, and a proxy to LLM and TTS providers">
+  <title>AniMate architecture</title>
+  <desc>The Rust shell runs a loopback HTTP server on 127.0.0.1:8933. The webview loads its UI from that server, so its origin stays loopback. That origin is what lets the renderer reach /_proxy, which forwards LLM and TTS calls with an Authorization header a browser could not set. Two character backends implement one contract.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#6b5b7a"/>
+    </marker>
+    <marker id="arrowAccent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#a78bfa"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="700" rx="16" fill="#0f0b13"/>
+
+  <text x="40" y="46" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="19" font-weight="600" fill="#f4f1f7">AniMate architecture</text>
+  <text x="40" y="70" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#8b7d97">One process. The renderer is a web page, served by a server in the same process.</text>
+
+  <!-- TAURI SHELL -->
+  <rect x="40" y="96" width="880" height="196" rx="12" fill="#171021" stroke="#33243f" stroke-width="1.5"/>
+  <text x="62" y="124" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#a78bfa">TAURI SHELL · RUST</text>
+
+  <rect x="62" y="140" width="250" height="126" rx="9" fill="#1d1428" stroke="#3d2c4a" stroke-width="1.2"/>
+  <text x="78" y="165" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#e6dff0">IPC commands</text>
+  <text x="78" y="189" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#9a8ca6">shell_*    window</text>
+  <text x="78" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#9a8ca6">models_*   import</text>
+  <text x="78" y="227" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#9a8ca6">settings_* LLM + voice</text>
+  <text x="78" y="251" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="10.5" fill="#6f6279">ACL-gated; file dialogs open here</text>
+
+  <rect x="336" y="140" width="562" height="126" rx="9" fill="#1d1428" stroke="#3d2c4a" stroke-width="1.2"/>
+  <text x="352" y="165" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#e6dff0">Loopback HTTP server</text>
+  <text x="352" y="182" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#7dd3fc">127.0.0.1:8933</text>
+
+  <text x="352" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#9a8ca6">/</text>
+  <text x="470" y="208" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#b3a6be">the UI bundle</text>
+  <text x="352" y="227" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#9a8ca6">/models/&lt;id&gt;/</text>
+  <text x="470" y="227" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#b3a6be">imported models, from app data</text>
+  <text x="352" y="246" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#c084fc">/_proxy</text>
+  <text x="470" y="246" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#b3a6be">forwards LLM and TTS upstream</text>
+
+  <line x1="180" y1="292" x2="180" y2="336" stroke="#6b5b7a" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="620" y1="336" x2="620" y2="292" stroke="#6b5b7a" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="194" y="319" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#8b7d97">invoke()</text>
+  <text x="486" y="319" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#8b7d97">HTTP + session token</text>
+
+  <!-- WEBVIEW -->
+  <rect x="40" y="336" width="880" height="176" rx="12" fill="#171021" stroke="#33243f" stroke-width="1.5"/>
+  <text x="62" y="364" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#a78bfa">WEBVIEW · REACT</text>
+  <text x="392" y="364" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#7dd3fc">origin http://127.0.0.1:8933</text>
+
+  <rect x="62" y="380" width="250" height="114" rx="9" fill="#1d1428" stroke="#3d2c4a" stroke-width="1.2"/>
+  <text x="78" y="404" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#e6dff0">UI</text>
+  <text x="78" y="426" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#9a8ca6">chat · settings · models</text>
+  <text x="78" y="445" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#9a8ca6">reply parsing → emotion</text>
+  <text x="78" y="472" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="10.5" fill="#6f6279">the app's own chrome</text>
+
+  <rect x="336" y="380" width="270" height="114" rx="9" fill="#1d1428" stroke="#4b3a2c" stroke-width="1.2"/>
+  <text x="352" y="404" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#e6dff0">SpineBackend · 2D</text>
+  <text x="352" y="426" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#9a8ca6">spine-webgl 4.2.43</text>
+  <text x="352" y="445" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#9a8ca6">camera fitted to measured bounds</text>
+  <text x="352" y="472" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="10.5" fill="#6f6279">idle · blink · expression · rim light</text>
+
+  <rect x="630" y="380" width="268" height="114" rx="9" fill="#1d1428" stroke="#2c4b3a" stroke-width="1.2"/>
+  <text x="646" y="404" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#e6dff0">MmdBackend · 3D</text>
+  <text x="646" y="426" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#9a8ca6">Babylon.js + babylon-mmd</text>
+  <text x="646" y="445" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#9a8ca6">PMX · toon + sphere materials</text>
+  <text x="646" y="472" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="10.5" fill="#6f6279">morphs · blink · no physics yet</text>
+
+  <!-- THE CONTRACT -->
+  <rect x="62" y="512" width="836" height="58" rx="8" fill="#140f1c" stroke="#2a1f34" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="80" y="536" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#8b7d97">CharacterRenderer</text>
+  <text x="212" y="536" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#b3a6be">mount · setEmotion · setSpeaking · playMotion · lookAt · resize</text>
+  <text x="80" y="556" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="10.5" fill="#6f6279">The only contract a backend has to satisfy — which is why the UI never branches on which one is loaded.</text>
+
+  <line x1="620" y1="570" x2="620" y2="606" stroke="#a78bfa" stroke-width="1.6" marker-end="url(#arrowAccent)"/>
+
+  <!-- PROVIDERS -->
+  <rect x="300" y="608" width="560" height="58" rx="9" fill="#1d1428" stroke="#4a3570" stroke-width="1.2"/>
+  <text x="318" y="632" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#e6dff0">LLM and TTS providers</text>
+  <text x="318" y="652" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="10.5" fill="#8b7d97">reached through /_proxy — the key never leaves the machine, and CORS never applies</text>
+</svg>

@@ -1,0 +1,77 @@
+@import 'tailwindcss';
+
+/* Design tokens. Tailwind v4 reads @theme and generates utilities from it,
+   so `bg-stage` / `text-ink` exist without any config file. */
+@theme {
+  --color-stage: #120d14;
+  --color-stage-soft: #1b141d;
+  --color-panel: #241b28;
+  --color-edge: #3a2d40;
+  --color-edge-soft: #2c2230;
+
+  --color-ink: #ece6ef;
+  --color-ink-dim: #a99cb0;
+  --color-ink-faint: #6f6376;
+
+  --color-accent: #d4537e;
+  --color-accent-soft: #993556;
+  --color-ok: #5dcaa5;
+  --color-warn: #ef9f27;
+  --color-err: #e24b4a;
+
+  --font-sans: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-mono: 'Cascadia Mono', Consolas, 'Courier New', monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--color-stage);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* The frameless window is the app frame; nothing should scroll the page. */
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Frameless window drag.
+   The attribute is what Tauri itself honours (needs the
+   core:window:allow-start-dragging permission). The CSS property is what
+   Chromium/WebView2 honours. Setting both means the title bar drags
+   regardless of which layer wins. */
+[data-tauri-drag-region] {
+  -webkit-app-region: drag;
+  app-region: drag;
+}
+
+[data-tauri-drag-region] button,
+[data-tauri-drag-region] input,
+[data-tauri-drag-region] a,
+.no-drag {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+
+/* Nothing in the chrome should be selectable — it reads as an app, not a page. */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-edge);
+  border-radius: 4px;
+}

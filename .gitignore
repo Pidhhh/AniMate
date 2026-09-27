@@ -60,6 +60,8 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.env.*
+!.env.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -88,8 +90,50 @@ typings/
 # Vite
 .vite/
 
-# Electron-Forge
+# Electron-Forge (legacy — the project is on Tauri now)
 out/
 
 # Reference files
 .references/
+
+# Test
+.test/
+
+# Debug logs (but keep config files)
+.test/chat-debug.json
+.test/session_*.json
+
+# Frontend build output
+dist/
+
+# Rust / Tauri build output
+src-tauri/target/
+src-tauri/gen/
+
+# Local tooling state (memory notes, backups of removed Electron code)
+.workbuddy-ai/
+
+# Character assets.
+#
+# The Spine skeletons, scene plates and voice clips are extracted game data
+# and are not redistributable — see the licensing section of MIGRATION-PLAN.md.
+# They live on disk for local development only and must never be committed or
+# shipped in a public installer.
+public/assets/*
+!public/assets/README.md
+!public/assets/.gitkeep
+
+# Local model fixtures for development.
+#
+# Example models kept on disk to test the importer and the renderers against.
+# They are someone else's character art — a PMX model carries its own licence
+# from its author, and none of them are ours to redistribute. The app itself
+# ships with no models at all (see public/assets/README.md); these are only
+# here so `npm run dev` has something to load.
+#
+# Nothing under here should ever be committed, and nothing under here is read
+# at runtime — the app reads from the app data directory, not the repo.
+models/
+
+# Scratch space for generated images.
+generated-images/

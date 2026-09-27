@@ -1,0 +1,60 @@
+# Line endings, pinned.
+#
+# Without this, line endings depend on each contributor's `core.autocrlf`
+# setting. On Windows that defaults to `true`, on Linux and macOS to `false` —
+# so the same file can round-trip through the repository differently depending
+# on who touched it last.
+#
+# It matters most for the shell scripts in `tools/`. A `.sh` file committed
+# with CRLF does not fail loudly on Linux or macOS; it fails with
+# `bad interpreter: /bin/bash^M`, which reads like a broken shebang rather than
+# a line-ending problem.
+#
+# `text=auto` lets git normalise, and the explicit rules below override it
+# where the answer is known.
+
+* text=auto
+
+# Shell and Python scripts must be LF everywhere. They are executed as-is on
+# every platform Git Bash, Linux and macOS all tolerate LF.
+*.sh text eol=lf
+*.py text eol=lf
+
+# Source and config: LF, so a Windows checkout does not churn the whole file
+# the first time a diff is taken.
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.rs text eol=lf
+*.toml text eol=lf
+*.svg text eol=lf
+
+# Windows-only files want CRLF, because their tooling expects it.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Never touch these. Git's text detection is good but not infallible, and a
+# mangled icon or lockfile is a confusing failure.
+*.png binary
+*.ico binary
+*.icns binary
+*.jpg binary
+*.skel binary
+*.atlas binary
+*.pmx binary
+*.pmd binary
+
+# `Cargo.lock` is deliberately committed for a reproducible Rust build, so
+# diffs of it should be readable.
+Cargo.lock text eol=lf
+package-lock.json text eol=lf
+
+# Generated output never needs a diff.
+dist/** linguist-generated=true
+src-tauri/target/** linguist-generated=true
