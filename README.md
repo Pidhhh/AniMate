@@ -6,7 +6,7 @@
 
 Talk to a character that reacts. Bring your own model — 2D or 3D.
 
-[Architecture](#architecture) · [Quick start](#quick-start) · [Importing a character](#importing-a-character) · [What isn't here](#what-isnt-here-yet)
+[Architecture](#architecture) · [Quick start](#quick-start) · [Importing a character](#importing-a-character) · [Current limitations](#current-limitations)
 
 </div>
 
@@ -43,22 +43,6 @@ model and paste in an endpoint — that is the whole setup.
 </td>
 </tr>
 </table>
-
-## Screenshots
-
-<!--
-  Drop real screenshots into docs/ and reference them here, e.g.
-
-  | Chat + 2D character | Chat + 3D character |
-  |---|---|
-  | ![2D](docs/screenshot-spine.png) | ![3D](docs/screenshot-mmd.png) |
-
-  The window is frameless and resizable; 480×854 is the default.
-  Capture with Win+Shift+S or the Snipping Tool.
--->
-
-*Screenshots are on the way — the app is still moving fast enough that they go
-stale in a week.*
 
 ## Features
 
@@ -208,9 +192,6 @@ The cost is that a listening socket needs defending, so it is:
 - **Not a secret store.** `settings.json` lives outside every served directory,
   so the API key is not reachable over HTTP.
 
-See [SECURITY-AUDIT.md](SECURITY-AUDIT.md) for the threat model and the
-findings that shaped it.
-
 ## Development
 
 ```bash
@@ -264,15 +245,12 @@ src-tauri/src/
 └── window_state.rs   geometry that survives a restart
 ```
 
-## What isn't here yet
-
-Said plainly, because a README that hides these wastes your time:
+## Current limitations
 
 | | Status |
 |---|---|
 | **MMD physics** | Not implemented. Hair and skirts do not move. Needs a WASM Bullet runtime. |
 | **MMD motion (VMD)** | Not implemented. `playMotion()` rejects rather than pretending. |
-| **MMD render coverage** | No redistributable PMX fixture is committed for automated rendering checks. |
 | **Chat persistence** | Conversations live in memory and are lost on restart. |
 | **Gaze and finger drivers** | Accepted by the contract, not applied by either backend. |
 | **Lip sync** | The mouth animates during speech, but not from audio amplitude. |
@@ -280,21 +258,11 @@ Said plainly, because a README that hides these wastes your time:
 | **macOS / Linux** | Untested. The code is cross-platform; nobody has run it. |
 | **Packaging** | Windows NSIS installer builds; signing and auto-update are not implemented. |
 
-## Documentation
-
-| | |
-|---|---|
-| [MIGRATION-PLAN.md](MIGRATION-PLAN.md) | How this was built: architecture decisions, phases, and a long list of things that went wrong. The §7b findings are the useful part. |
-| [SECURITY-AUDIT.md](SECURITY-AUDIT.md) | Threat model, findings, and what was accepted rather than fixed. |
-| [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) | Licenses that are not MIT — read this before distributing a build. |
-| [public/assets/README.md](public/assets/README.md) | Where imported models live and why none are bundled. |
-
 ## License
 
 [MIT](LICENSE) for AniMate's own source.
 
-**This is not the whole story**, and it matters if you plan to distribute a
-build:
+Bundled dependencies and ported code have separate terms:
 
 - **The Spine runtime is not MIT.** `public/vendor/spine-webgl.js` is
   Esoteric Software's. Its [full license and copyright notice](public/vendor/Spine-Runtimes-License-Agreement.txt)
@@ -304,10 +272,9 @@ build:
 - **Some renderer and chat logic was ported from RyzaChat.** Its provenance is
   documented in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md), but this
   repository does not document a redistribution grant for those portions.
-  Confirm the rights before a public source push.
-- **No character art is included**, and none is redistributable from this
-  repository. The models used during development were extracted game data and
-  private imports, deliberately excluded via `.gitignore`.
+  Confirm the rights before redistributing that code.
+- **No character art is included.** Imported models stay on the user's machine
+  and are excluded from this repository.
 - **The app icons are Tauri's defaults**, not AniMate artwork.
 
 See [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) for the full list.

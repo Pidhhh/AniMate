@@ -18,10 +18,7 @@ Nothing from it is redistributed here beyond the logic, and no art, audio or
 scene data came across.
 
 This repository does not contain a redistribution license for the ported
-logic. Confirm the rights to publish those portions before a public push.
-
-`MIGRATION-PLAN.md` is the working document from that port and describes the
-process in detail, including what was deliberately left behind.
+logic. Confirm the rights before redistributing those portions.
 
 ---
 
@@ -43,9 +40,9 @@ authoritative text is at:
 
 <https://esotericsoftware.com/spine-runtimes-license>
 
-**Before publishing the source or distributing a build of AniMate, confirm the
-applicable integration and distribution terms are met.** The MMD backend does
-not depend on this runtime.
+**Before redistributing the source or a build of AniMate, confirm the applicable
+integration and distribution terms are met.** The MMD backend does not depend
+on this runtime.
 
 > Note: the version is pinned deliberately. Skeleton binaries carry a version
 > trailer, and the runtime must match it exactly — a skew renders silently wrong

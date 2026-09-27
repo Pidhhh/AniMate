@@ -8,10 +8,8 @@ installed app so it survives updates.
 
 ## Why nothing is bundled
 
-The models this project was originally developed against were extracted game
-data — not redistributable, and not something an installer should carry. Rather
-than ship them behind a licence notice, the app has no default character at
-all. See the licensing section of `MIGRATION-PLAN.md`.
+AniMate has no default character. Users import models they have the right to
+use; no character assets are included in the source or installer.
 
 ## Where imported models live
 
